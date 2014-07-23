@@ -1,0 +1,54 @@
+JFDML JFormDesigner: "5.2.0.0.109" Java: "1.7.0_40" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {space :::p, par l {comp chatscroll::::917:x, seq {comp inputfield::::748:x, space s:::p, comp sendbutton:::p:151:p}}, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp chatscroll:::p:397:p, space :::p, par l:::p {comp inputfield::::50:x, comp sendbutton::::50:x}, space ::97:x}}"
+		} ) {
+			name: "this"
+			addEvent( new FormEvent( "java.awt.event.WindowListener", "windowClosing", "thisWindowClosing", true ) )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "chatscroll"
+				add( new FormComponent( "javax.swing.JTextPane" ) {
+					name: "chatoutput"
+					"editable": false
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "inputfield"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "sendbutton"
+				"text": "Send"
+			} )
+			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+				name: "menuBar1"
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu1"
+					"text": "Connection"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuItem1"
+						"text": "New"
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuItem2"
+						"text": "Disconnect"
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu2"
+					"text": "Settings"
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "menu3"
+						"text": "View"
+					} )
+				} )
+			}
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 945, 615 )
+		} )
+	}
+}
