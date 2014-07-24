@@ -1,7 +1,5 @@
 package Main;
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.*;
-import Main.Packets.*;
 import Main.Frames.*;
 
 import javax.swing.*;
@@ -24,23 +22,27 @@ public class Main {
     }
 
     //---------Start server or client threads
-    public boolean startServer(){
+    public static void startServer(){
         try{
             serverthread.run();
-            return true;
+
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Error starting Server");
-            return false;
+
         }
 
     }
-    public boolean startClient(){
-        try{
+
+    public static void startClient(String ip, int tcpport, int udpport) {
+        try {
+            clientthread.setIp(ip);
+            clientthread.setTcp(tcpport);
+            clientthread.setUdp(udpport);
             clientthread.run();
-            return true;
-        }catch(Exception e){
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error starting Client");
-            return false;
+
         }
 
     }
@@ -49,11 +51,12 @@ public class Main {
 
     //Stops all threads, if they are running and then exits main thread
     public void shutDown(){
-        guithread.setRun(false);
 
         if(serverthread.isRunning()) serverthread.setRun(false);
 
         if(clientthread.isRunning()) clientthread.setRun(false);
+
+        guithread.setRun(false);
         System.exit(1);
     }
 }
@@ -63,6 +66,7 @@ public class Main {
 class ServerThread implements Runnable{
     private boolean run;
     @Override
+
     public void run() {
         this.run = true;
     }
@@ -89,9 +93,11 @@ class ClientThread implements Runnable{
     @Override
     public void run() {
         this.run = true;
+        startConnection();
+
     }
 
-    public void startConnection(String ip, int tcpport, int udpport) {
+    public void startConnection() {
         client = new Client();
         client.start();
         try {
@@ -109,23 +115,37 @@ class ClientThread implements Runnable{
         if(value = true) this.run = true;
         else this.run = false;
     }
+
+    public void setUdp(int udp) {
+        this.udpport = udp;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public void setTcp(int tcp){
+        this.tcpport = tcp;
+    }
 }
 
 
 class GuiThread implements Runnable{
     private boolean run;
-    private NewConnection newconnection;
+    private NewConnectionWindow newconnection;
     @Override
     public void run() {
-        newconnection = new NewConnection();
         this.run = true;
+        newconnection = new NewConnectionWindow();
+        newconnection.setVisible(true);
 
         while (run) {
-            newconnection.setVisible(true);
+
         }
     }
 
-    public NewConnection getNewConWindow() {
+    //returns the New Connnection Window object to retrieve input
+    public NewConnectionWindow getNewConWindow() {
         return this.newconnection;
 
     }
